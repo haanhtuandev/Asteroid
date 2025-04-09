@@ -3,6 +3,7 @@ from constants import *
 from player import *
 from asteroid import *
 from asteroidfield import *
+import sys
 def main():
     pygame.init
     clock = pygame.time.Clock()
@@ -26,9 +27,15 @@ def main():
     while True:
         pygame.Surface.fill(screen, (0,0,0))
         updatable.update(dt)
+
         # Draw all objects in the `drawables` group
         for sprite in drawable:
             sprite.draw(screen)  # Calls .draw(screen) on each sprite
+        
+        for asteroid in asteroids:
+            if asteroid.is_collided(player):
+                print("Game over!")
+                sys.exit()
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
